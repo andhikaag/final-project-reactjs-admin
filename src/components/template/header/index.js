@@ -4,7 +4,13 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import {
+  Navbar,
+  Nav,
+  Container,
+  Row,
+  Col,
+} from 'react-bootstrap'
 import AdminLogo from '../../images/admin.png'
 import Home from '../../pages/home'
 
@@ -28,17 +34,45 @@ export default class index extends Component {
                 </div>
                 <div className="navbarAdmin">
                   <Nav.Link className="text-light" href="#">
-                    <i className="logo fas fa-home"></i>
-                    Home
+                    <Row>
+                      <Col sm="2">
+                        <i className="fas fa-home"></i>
+                      </Col>
+                      <Col sm="10">
+                        Home
+                      </Col>
+                    </Row>
                   </Nav.Link>
                 </div>
                 <Nav.Link className="text-dark" href="#">
-                  <i className="logo fas fa-address-book"></i>
-                  Comunnity Officer
+                  <Row>
+                    <Col sm="2">
+                      <i className="fas fa-address-book"></i>
+                    </Col>
+                    <Col sm="10">
+                      Comunnity Officer
+                    </Col>
+                  </Row>
                 </Nav.Link>
                 <Nav.Link className="text-dark" href="#">
-                  <i className="logo fas fa-plus"></i>
-                  Add Data
+                  <Row>
+                    <Col sm="2">
+                      <i className="fa fa-handshake-o"></i>
+                    </Col>
+                    <Col sm="10">
+                      Nasabah
+                    </Col>
+                  </Row>
+                </Nav.Link>
+                <Nav.Link className="text-dark" href="#">
+                  <Row>
+                    <Col sm="2">
+                      <i className="fas fa-plus"></i>
+                    </Col>
+                    <Col sm="10">
+                      Add Data
+                    </Col>
+                  </Row>
                 </Nav.Link>
               </div>
             </div>

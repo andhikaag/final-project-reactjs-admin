@@ -56,6 +56,19 @@ body {
     border-radius: 5px;
 }
 
+.cardDesg {
+    height: auto;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.buttonApp {
+    width: 40%;
+    background: #f48500 !important;
+    color: white !important;
+    margin-top: 40px;
+}
+
 @media (min-width: 768px) {
     #sidebar-wrapper {
         margin-left: 0;
