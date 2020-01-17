@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Button, Container } from 'react-bootstrap'
 import AdminLogo from '../../images/admin.png'
+import '../../../App.css';
 
 export default class Login extends Component {
   constructor(props) {
