@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import {
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom'
 import {
   Navbar,
@@ -12,39 +13,44 @@ import {
   Col,
 } from 'react-bootstrap'
 import AdminLogo from '../../images/admin.png'
+import Logo from '../../images/logo.png'
 import Home from '../../pages/home'
+import Employee from '../../pages/employee'
+import AddEmployee from '../../pages/form/addEmployee'
+import Login from '../../pages/login'
 
 export default class index extends Component {
+
   render() {
     return (
       <>
         <div id="page-content-wrapper">
           <Navbar expand="lg" className="navbarAdmin" variant="dark">
-            <Navbar.Brand className="sideAdmin" href="#home">Admin</Navbar.Brand>
+            <Navbar.Brand className="headText" href="#home">
+              Syariah Financing
+            </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
-              <Nav.Link className="text-light" href="#login">Log Out</Nav.Link>
+              <Nav.Link className="text-light">Log Out</Nav.Link>
             </Navbar.Collapse>
           </Navbar>
-          <div class="d-flex" id="wrapper">
-            <div class="sidebar" id="sidebar-wrapper">
-              <div class="list-group list-group-flush">
+          <div className="d-flex" id="wrapper">
+            <div className="sidebar" id="sidebar-wrapper">
+              <div className="list-group list-group-flush">
                 <div className="imageAdmin">
                   <img src={AdminLogo} width="100" height="100" />
                 </div>
-                <div className="navbarAdmin">
-                  <Nav.Link className="text-light" href="#">
-                    <Row>
-                      <Col sm="2">
-                        <i className="fas fa-home"></i>
-                      </Col>
-                      <Col sm="10">
-                        Home
-                      </Col>
-                    </Row>
-                  </Nav.Link>
-                </div>
-                <Nav.Link className="text-dark" href="#">
+                <Link className="textApp textSide" to="/">
+                  <Row>
+                    <Col sm="2">
+                      <i className="fas fa-home"></i>
+                    </Col>
+                    <Col sm="10">
+                      Home
+                    </Col>
+                  </Row>
+                </Link>
+                <Link className="textApp textSide" to="/employee">
                   <Row>
                     <Col sm="2">
                       <i className="fas fa-address-book"></i>
@@ -53,8 +59,8 @@ export default class index extends Component {
                       Comunnity Officer
                     </Col>
                   </Row>
-                </Nav.Link>
-                <Nav.Link className="text-dark" href="#">
+                </Link>
+                <Link className="textApp textSide" to="/employee">
                   <Row>
                     <Col sm="2">
                       <i className="fa fa-handshake-o"></i>
@@ -63,8 +69,8 @@ export default class index extends Component {
                       Nasabah
                     </Col>
                   </Row>
-                </Nav.Link>
-                <Nav.Link className="text-dark" href="#">
+                </Link>
+                <Link className="textApp textSide" to="/add_employee">
                   <Row>
                     <Col sm="2">
                       <i className="fas fa-plus"></i>
@@ -73,14 +79,21 @@ export default class index extends Component {
                       Add Data
                     </Col>
                   </Row>
-                </Nav.Link>
+                </Link>
               </div>
             </div>
             <Container>
-              Card
-              <div className="content">
-
-              </div>
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/employee">
+                  <Employee />
+                </Route>
+                <Route path="/add_employee">
+                  <AddEmployee />
+                </Route>
+              </Switch>
             </Container>
           </div>
         </div>

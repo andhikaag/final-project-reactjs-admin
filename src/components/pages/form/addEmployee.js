@@ -8,7 +8,7 @@ import {
 export default class addEmployee extends Component {
   render() {
     return (
-      <div>
+      <div className="content">
         <Form>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridNama">

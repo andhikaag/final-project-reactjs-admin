@@ -2,8 +2,29 @@ body {
     overflow-x: hidden;
 }
 
+
+/* Color */
+.textApp {
+    color: #f48500;
+}
+
+.textApp:hover {
+    text-decoration: none;
+    color: #555;
+}
+
 .navbarAdmin {
     background-image: linear-gradient(to right, #f48500, #fba300);
+}
+
+.pinkColor {
+    background-color: #D0004D;
+}
+
+/* Navbar */
+.headText {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-transform: uppercase;
 }
 
 .sidebar {
@@ -38,9 +59,16 @@ body {
     margin-left: 60px;
 }
 
+.textSide {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* Content */
+
 .content {
     margin-left: 30px;
-    margin-top: 30px;
+    margin-top: 10px;
     height: auto;
     width: auto;
     margin-bottom: auto;
@@ -69,7 +97,29 @@ body {
     margin-top: 40px;
 }
 
-@media (min-width: 768px) {
+/* Notify */
+.notify {
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.notifyText {
+    text-align: center;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    text-align: center;
+}
+
+.textFooter {
+    margin-top: 40px;
+}
+
+@media (min-width: 568px) {
     #sidebar-wrapper {
         margin-left: 0;
     }
