@@ -13,11 +13,9 @@ import {
   Col,
 } from 'react-bootstrap'
 import AdminLogo from '../../images/admin.png'
-import Logo from '../../images/logo.png'
 import Home from '../../pages/home'
 import Employee from '../../pages/employee'
 import AddEmployee from '../../pages/form/addEmployee'
-import Login from '../../pages/login'
 
 export default class index extends Component {
 
@@ -31,7 +29,7 @@ export default class index extends Component {
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
-              <Nav.Link className="text-light">Log Out</Nav.Link>
+              <Nav.Link className="text-light" href="/login">Log Out</Nav.Link>
             </Navbar.Collapse>
           </Navbar>
           <div className="d-flex" id="wrapper">
