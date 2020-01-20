@@ -28,7 +28,7 @@ const state = {
   ]
 }
 
-export default class infoEmployee extends Component {
+export default class InfoEmployee extends Component {
   render() {
     return (
       <>

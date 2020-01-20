@@ -11,6 +11,7 @@ export default class App extends Component {
     super(props)
     this.state = {
       url: window.location.pathname
+      // status: true
     }
   }
 
