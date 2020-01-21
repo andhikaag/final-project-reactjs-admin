@@ -7,6 +7,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import rootReducer from './redux/reducer/GlobalReducer'
+import { CookiesProvider } from 'react-cookie'
 
 //store
 const storeRedux = createStore(rootReducer)

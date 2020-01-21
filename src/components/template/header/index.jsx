@@ -7,6 +7,8 @@ import {
 import {
   Container,
 } from 'react-bootstrap'
+import Cookie from 'react-cookies'
+import { connect } from 'react-redux'
 
 //elements
 import NavMenu from '../../elements/NavMenu'
@@ -18,15 +20,34 @@ import Home from '../../pages/home'
 import Employee from '../../pages/employee'
 import AddEmployee from '../../pages/form/AddEmployee'
 import Nasabah from '../../pages/nasabah'
+import Info from '../../pages/employee/InfoEmployee'
+import { checkToken, checkAuth } from '../../../auth/auth'
 
 
-export default class index extends Component {
+class Header extends Component {
+  constructor(props) {
+    super(props)
+    checkToken()
+    if (checkAuth()) {
+      this.props.changeStatus()
+    } else {
+      alert("Access Denied")
+      window.location.href = "/login"
+    }
+  }
+
+  logout = () => {
+    Cookie.remove('token')
+
+    window.location.href = "/login"
+  }
 
   render() {
+    console.log(this.props.isLoggedIn)
     return (
       <>
         <div id="page-content-wrapper">
-          <TopBar brandName="Syariah Financing" textRight="Log Out" />
+          <TopBar brandName="Syariah Financing" textRight="Log Out" link={this.logout} />
           <div className="d-flex" id="wrapper">
             <div className="sidebar" id="sidebar-wrapper">
               <div className="list-group list-group-flush">
@@ -51,6 +72,9 @@ export default class index extends Component {
                 <Route path="/add-employee">
                   <AddEmployee />
                 </Route>
+                <Route path="/info-employee">
+                  <Info />
+                </Route>
               </Switch>
             </Container>
           </div>
@@ -60,3 +84,16 @@ export default class index extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.login
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    changeStatus: () => dispatch({ type: 'ADD_SESSION' }),
+  }
+}
+export default connect(mapStateToProps, mapDispatch)(Header)

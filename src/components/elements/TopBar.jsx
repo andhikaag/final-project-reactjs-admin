@@ -16,7 +16,7 @@ export default class TopBar extends Component {
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Nav.Link className="text-light" href="/login">{this.props.textRight}</Nav.Link>
+          <Nav.Link className="text-light" onClick={this.props.link}>{this.props.textRight}</Nav.Link>
         </Navbar.Collapse>
       </Navbar>
     )

@@ -29,9 +29,17 @@ const state = {
 }
 
 export default class InfoEmployee extends Component {
+
+  componentDidMount() {
+    const url = window.location
+    const urlObject = new URL(url)
+    const idNasabah = urlObject.searchParams.get("id")
+    console.log(idNasabah)
+  }
+
   render() {
     return (
-      <>
+      <div className="content">
         <Row>
           <Col lg="5">
             <Card border="info" className="cardDesg">
@@ -171,7 +179,7 @@ export default class InfoEmployee extends Component {
             </Card>
           </Col>
         </Row>
-      </>
+      </div>
     )
   }
 }

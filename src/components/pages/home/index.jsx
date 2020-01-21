@@ -7,6 +7,9 @@ import {
 import { Line } from 'react-chartjs-2'
 import CardCount from '../../elements/CardCount'
 import Axios from 'axios'
+import Cookie from 'react-cookies'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const chart = {
   labels: ['Januari', 'Februari', 'Maret',
@@ -32,17 +35,14 @@ class Home extends Component {
       <div>
         <div className="notify">
           <Row>
-            <Col lg="3">
+            <Col lg="4">
               <CardCount className="notifyText" bg="success" text="Community Officer" value="200" />
             </Col>
-            <Col lg="3">
+            <Col lg="4">
               <CardCount className="notifyText" bg="primary" text="Nasabah" value="4000" />
             </Col>
-            <Col lg="3">
+            <Col lg="4">
               <CardCount className="notifyText" bg="warning" text="Nasabah Aktif" value="3000" />
-            </Col>
-            <Col lg="3">
-              <CardCount className="notifyText pinkColor" text="Nasabah Baru" value="600" />
             </Col>
           </Row>
         </div>
@@ -67,5 +67,6 @@ class Home extends Component {
     )
   }
 }
+
 
 export default Home

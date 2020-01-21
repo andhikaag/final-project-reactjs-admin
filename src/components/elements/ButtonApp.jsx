@@ -4,7 +4,13 @@ import { Button } from 'react-bootstrap'
 export default class ButtonApp extends Component {
   render() {
     return (
-      <Button className={this.props.className} type="submit" onClick={this.props.onClick} variant={this.props.variant}>
+      <Button
+        className={this.props.className}
+        type="submit"
+        onClick={this.props.onClick}
+        variant={this.props.variant}
+        size={this.props.size}
+      >
         {this.props.text}
       </Button>
     )

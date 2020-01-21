@@ -8,8 +8,9 @@ import {
 import ButtonApp from '../../elements/ButtonApp'
 import Search from '../../elements/Search'
 import Axios from 'axios'
+import { withRouter } from 'react-router'
 
-export default class index extends Component {
+class Employee extends Component {
   state = {
     data: []
   }
@@ -33,6 +34,11 @@ export default class index extends Component {
         alert("error", error)
       })
   }
+
+  // onclickInfo = (id) => {
+  //   this.props.history.push(`/detail-post/${id}`)
+  // }
+
   render() {
     return (
       <>
@@ -52,6 +58,7 @@ export default class index extends Component {
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Username</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -64,7 +71,10 @@ export default class index extends Component {
                     <td>
                       <Badge pill variant="info">
                         Blue
-                </Badge>
+                      </Badge>
+                    </td>
+                    <td>
+                      <ButtonApp size="sm" onClick={() => this.props.history.push("/info-employee?id=" + val.id)} variant="info" text="info" />
                     </td>
                   </tr>
                 )
@@ -76,3 +86,5 @@ export default class index extends Component {
     )
   }
 }
+
+export default withRouter(Employee)

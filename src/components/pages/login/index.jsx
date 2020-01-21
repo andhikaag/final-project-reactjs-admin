@@ -7,8 +7,11 @@ import InputLogin from './elements/InputLogin'
 import ImageAdmin from '../../elements/ImageAdmin'
 import Button from '../../elements/ButtonApp'
 import Axios from 'axios';
+import Cookie from 'react-cookies'
+import { Redirect } from 'react-router'
 
 class Login extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -42,13 +45,22 @@ class Login extends Component {
     })
       .then((res) => {
         console.log(res)
-        if (res.data.status === 'success') {
-          if (res.data.data.role === null) {
-            alert("sukses")
-            this.props.changeStatus()
-          } else {
-            alert("access denied")
-          }
+        if (res.status === 200 && res.data.data.token) {
+          let token = res.data.data.token
+          console.log(Cookie)
+          Cookie.save('token', token, {
+            path: '/'
+          })
+          window.location.href = "/"
+          // localStorage.setItem("access_token", token)
+          // alert("sukses")
+          // let tokenJson = JSON.parse(atob(token.split(".")[1]))
+          // console.log(tokenJson)
+          // if (res.data.data.role === null) {
+          // } else {
+          //   alert("access denied")
+          // }
+
         } else {
           alert("Username/Password Salah")
         }
@@ -57,11 +69,12 @@ class Login extends Component {
         console.log(this.state.username)
         console.log(this.state.username)
         console.log(error)
-        alert("error", error)
+        alert("Username/Password Salah", error)
       })
   }
 
   render() {
+    // console.log(Cookie.load('token'))
     console.log(this.props.isLoggedIn)
     return (
       <Container>
@@ -92,7 +105,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    changeStatus: () => dispatch({ type: 'ADD_SESSION' })
+    changeStatus: () => dispatch({ type: 'ADD_SESSION' }),
   }
 }
 
