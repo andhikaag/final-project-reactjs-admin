@@ -1,5 +1,6 @@
 const globalState = {
-    login: false
+    login: false,
+    data: []
 }
 
 const rootReducer = (state = globalState, action) => {
@@ -9,8 +10,12 @@ const rootReducer = (state = globalState, action) => {
                 ...state,
                 login: true
             }
-            default:
-                return state
+            case 'GET DATA':
+                return {
+                    ...state,
+                }
+                default:
+                    return state
     }
 }
 

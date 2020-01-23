@@ -14,7 +14,7 @@ export default class Search extends Component {
       <InputGroup className="mb-3">
         <FormControl placeholder="Search...." />
         <InputGroup.Append>
-          <ButtonApp text="Add Data" variant="outline-warning" />
+          <ButtonApp onClick={this.props.onClick} text="Search" variant="outline-warning" />
         </InputGroup.Append>
       </InputGroup>
     )

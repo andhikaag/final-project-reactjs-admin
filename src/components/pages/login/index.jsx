@@ -32,21 +32,22 @@ class Login extends Component {
   onLogin = (event) => {
     event.preventDefault();
     Axios({
-      url: 'http://54.254.180.214:9803/api/login',
-      method: 'POST',
+      // 54.254.180.214:9803/api/login
+      url: 'http://192.168.30.94:3000/users/login',
+      method: 'post',
       headers: {
-        "token": "xxx123",
+        "Content-Type": "application/json",
 
       },
       data: {
-        "nik": this.state.username,
+        "username": this.state.username,
         "password": this.state.password
       }
     })
       .then((res) => {
-        console.log(res)
-        if (res.status === 200 && res.data.data.token) {
-          let token = res.data.data.token
+        console.info(res)
+        if (res.status === 200 && res.data.token) {
+          let token = res.data.token
           console.log(Cookie)
           Cookie.save('token', token, {
             path: '/'
@@ -60,7 +61,6 @@ class Login extends Component {
           // } else {
           //   alert("access denied")
           // }
-
         } else {
           alert("Username/Password Salah")
         }

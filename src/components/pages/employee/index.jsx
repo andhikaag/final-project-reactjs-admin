@@ -1,40 +1,55 @@
 import React, { Component } from 'react'
 import {
   Table,
-  Badge,
   Row,
   Col,
+  Pagination
 } from 'react-bootstrap'
 import ButtonApp from '../../elements/ButtonApp'
 import Search from '../../elements/Search'
 import Axios from 'axios'
 import { withRouter } from 'react-router'
+import HeaderText from '../../elements/HeaderText'
+import API from '../../../api'
 
 class Employee extends Component {
   state = {
-    data: []
+    data: [],
+    activePage: 15
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
+    API.getEmployee().then(res => {
+      this.setState({
+        data: res
+      })
+      console.log(this.state.data)
+    })
+  }
+
+  handlePageChange(pageNumber) {
     Axios({
-      url: 'http://54.254.180.214:9803/api/nasabah/list',
+      url: 'http://54.254.180.214:9803/api/nasabah/list?page=' + pageNumber,
+      // url: 'http://192.168.30.94:3000/reports/all',
       method: 'GET',
       headers: {
         "token": "xxx123",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       }
     })
       .then((res) => {
         console.log(res)
         this.setState({
-          data: res.data.data
+          data: res.data.data,
+          activePage: res.data.page
         })
       }).catch((error) => {
         console.log(error)
         alert("error", error)
       })
+    // console.log(`active page is ${pageNumber}`);
+    // this.setState({ activePage: pageNumber });
   }
-
   // onclickInfo = (id) => {
   //   this.props.history.push(`/detail-post/${id}`)
   // }
@@ -43,10 +58,9 @@ class Employee extends Component {
     return (
       <>
         <div className="content">
+          <HeaderText headText="List Data Community Officer" />
           <Row>
-            <Col>
-              <ButtonApp text="Add Data" variant="info" />
-            </Col>
+            <Col></Col>
             <Col>
               <Search />
             </Col>
@@ -54,10 +68,9 @@ class Employee extends Component {
           <Table responsive striped bordered hover size="sm">
             <thead>
               <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
+                <th>NIK</th>
+                <th>Nama</th>
+                <th>Email</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -68,11 +81,6 @@ class Employee extends Component {
                     <td>{val.nama}</td>
                     <td>{val.email}</td>
                     <td>{val.alamat}</td>
-                    <td>
-                      <Badge pill variant="info">
-                        Blue
-                      </Badge>
-                    </td>
                     <td>
                       <ButtonApp size="sm" onClick={() => this.props.history.push("/info-employee?id=" + val.id)} variant="info" text="info" />
                     </td>

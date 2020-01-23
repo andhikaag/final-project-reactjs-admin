@@ -21,19 +21,16 @@ import Employee from '../../pages/employee'
 import AddEmployee from '../../pages/form/AddEmployee'
 import Nasabah from '../../pages/nasabah'
 import Info from '../../pages/employee/InfoEmployee'
-import { checkToken, checkAuth } from '../../../auth/auth'
+import AddEmployeeLogin from '../../pages/form/AddEmployeeLogin'
+import { checkToken } from '../../../auth/auth'
+import Report from '../../pages/report'
 
 
 class Header extends Component {
   constructor(props) {
     super(props)
     checkToken()
-    if (checkAuth()) {
-      this.props.changeStatus()
-    } else {
-      alert("Access Denied")
-      window.location.href = "/login"
-    }
+    this.props.changeStatus()
   }
 
   logout = () => {
@@ -43,7 +40,7 @@ class Header extends Component {
   }
 
   render() {
-    console.log(this.props.isLoggedIn)
+    console.log("status isLoggedIn", this.props.isLoggedIn)
     return (
       <>
         <div id="page-content-wrapper">
@@ -55,7 +52,9 @@ class Header extends Component {
                 <NavMenu to="/" icon="fas fa-home" text="Home" />
                 <NavMenu to="/employee" icon="fas fa-address-book" text="Community Officer" />
                 <NavMenu to="/nasabah" icon="fa fa-handshake-o" text="Nasabah" />
-                <NavMenu to="add-employee" icon="fas fa-plus" text="Add Data" />
+                <NavMenu to="report" icon="fa fa-book" text="Transaksi" />
+                <NavMenu to="add-employee" icon="fas fa-plus" text="Add Data CO" />
+                <NavMenu to="add-employee-login-account" icon="fa fa-user-plus" text="Add Akun CO" />
               </div>
             </div>
             <Container>
@@ -74,6 +73,12 @@ class Header extends Component {
                 </Route>
                 <Route path="/info-employee">
                   <Info />
+                </Route>
+                <Route path="/add-employee-login-account">
+                  <AddEmployeeLogin />
+                </Route>
+                <Route path="/report">
+                  <Report />
                 </Route>
               </Switch>
             </Container>

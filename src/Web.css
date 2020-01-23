@@ -71,6 +71,10 @@ body {
 
 /* Content */
 
+.contentHeadText {
+    margin-bottom: 40px;
+}
+
 .content {
     margin-left: 30px;
     margin-top: 10px;
@@ -100,6 +104,11 @@ body {
     background: #f48500 !important;
     color: white !important;
     margin-top: 40px;
+}
+
+.btnEdit {
+    background: #f48500 !important;
+    border-radius: 30px;
 }
 
 /* Notify */

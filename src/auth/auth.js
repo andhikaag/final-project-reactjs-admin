@@ -1,6 +1,6 @@
-import {
-    connect
-} from 'react-redux'
+// import {
+//     useDispatch
+// } from 'react-redux'
 import Cookie from 'react-cookies'
 
 let token = Cookie.load('token')
@@ -11,13 +11,16 @@ export const checkToken = () => {
     }
 }
 
-export const checkAuth = () => {
-    let tokenJson = JSON.parse(atob(token.split(".")[1]))
+// const mapStateToProps = (state) => {
+//     return {
+//         isLoggedIn: state.login
+//     }
+// }
 
-    if (tokenJson.role === null) {
-        console.log("sukses")
-        return true
-    } else {
-        return false
-    }
-}
+// const mapDispatch = (dispatch) => {
+//     return {
+//         changeStatus: () => dispatch({
+//             type: 'ADD_SESSION'
+//         }),
+//     }
+// }

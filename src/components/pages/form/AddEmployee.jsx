@@ -4,11 +4,29 @@ import {
   Col,
   Button,
 } from 'react-bootstrap'
+import HeaderText from '../../elements/HeaderText'
 
 export default class addEmployee extends Component {
+
+  state = {
+    nik: '',
+    statusForm: false,
+    statusNik: false
+  }
+
+  onChangeNik = (e) => {
+    this.setState({ nik: e.target.value })
+    if (e.target.value.length === 8) {
+      this.setState({ statusNik: true })
+    } else {
+      this.setState({ statusNik: false })
+    }
+  }
+
   render() {
     return (
       <div className="content">
+        <HeaderText headText="Form Tambah Data Community Officer" />
         <Form>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridNama">
@@ -24,7 +42,16 @@ export default class addEmployee extends Component {
 
           <Form.Group controlId="formGridNIK">
             <Form.Label>NIK</Form.Label>
-            <Form.Control placeholder="Masukkan NIK" />
+            <Form.Control maxLength="8" type="number" value={this.state.nik} onChange={this.onChangeNik} placeholder="Masukkan NIK" />
+            {
+              this.state.statusNik ?
+                <small className="form-text text-success">
+                  OK!
+                  </small> :
+                <small className="form-text text-danger">
+                  *isi harus 8 angka
+                  </small>
+            }
           </Form.Group>
 
           <Form.Group controlId="formGridAlamat">
