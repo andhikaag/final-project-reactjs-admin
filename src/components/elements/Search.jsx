@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import {
-  Row,
-  Col,
   InputGroup,
   FormControl,
 } from 'react-bootstrap'
@@ -12,7 +10,7 @@ export default class Search extends Component {
   render() {
     return (
       <InputGroup className="mb-3">
-        <FormControl placeholder="Search...." />
+        <FormControl value={this.props.value} onChange={this.props.onChange} placeholder={this.props.text} />
         <InputGroup.Append>
           <ButtonApp onClick={this.props.onClick} text="Search" variant="outline-warning" />
         </InputGroup.Append>

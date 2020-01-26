@@ -6,7 +6,7 @@ export default class index extends Component {
       <>
         <div className="footer">
           <div className="textFooter">
-            Footer
+            <footer className="blockquote-footer"><cite title="Source Title">SYARIAH FINANCING</cite></footer>
           </div>
         </div>
       </>

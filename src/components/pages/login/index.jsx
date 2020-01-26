@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Form, Container } from 'react-bootstrap'
-import { connect } from 'react-redux'
 
 import '../../../App.css';
 import InputLogin from './elements/InputLogin'
@@ -8,7 +7,6 @@ import ImageAdmin from '../../elements/ImageAdmin'
 import Button from '../../elements/ButtonApp'
 import Axios from 'axios';
 import Cookie from 'react-cookies'
-import { Redirect } from 'react-router'
 
 class Login extends Component {
 
@@ -33,7 +31,7 @@ class Login extends Component {
     event.preventDefault();
     Axios({
       // 54.254.180.214:9803/api/login
-      url: 'http://192.168.30.94:3000/users/login',
+      url: 'http://192.168.1.15:3000/users/login',
       method: 'post',
       headers: {
         "Content-Type": "application/json",
@@ -52,24 +50,20 @@ class Login extends Component {
           Cookie.save('token', token, {
             path: '/'
           })
+          let tokenJson = JSON.parse(atob(token.split(".")[1]))
+          console.log(tokenJson)
+          let nama = tokenJson.name
+          console.log(nama)
+          Cookie.save('nama', nama, {
+            path: '/'
+          })
           window.location.href = "/"
-          // localStorage.setItem("access_token", token)
-          // alert("sukses")
-          // let tokenJson = JSON.parse(atob(token.split(".")[1]))
-          // console.log(tokenJson)
-          // if (res.data.data.role === null) {
-          // } else {
-          //   alert("access denied")
-          // }
         } else {
-          alert("Username/Password Salah")
+          alert("Data belum benar")
         }
-        console.log(res.status)
-      }).catch((error) => {
-        console.log(this.state.username)
-        console.log(this.state.username)
-        console.log(error)
-        alert("Username/Password Salah", error)
+      }).catch((res) => {
+        console.log(res)
+        alert("Data belum benar")
       })
   }
 
@@ -97,16 +91,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.login
-  }
-}
-
-const mapDispatch = (dispatch) => {
-  return {
-    changeStatus: () => dispatch({ type: 'ADD_SESSION' }),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatch)(Login)
+export default Login

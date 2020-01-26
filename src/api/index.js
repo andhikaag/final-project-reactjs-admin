@@ -1,9 +1,10 @@
 import Axios from 'axios'
 import Cookie from 'react-cookies'
 
+// api update 
 // const rootPath = 'http://54.254.180.214:9803'
 // const rootPath = 'http://192.168.30.38:8080/employee'
-const rootPath = 'http://192.168.30.94:3000'
+const rootPath = 'http://192.168.1.15:3000'
 const token = Cookie.load('token')
 const Get = (path) => {
     const promise = new Promise((resolve, reject) => {
@@ -18,38 +19,48 @@ const Get = (path) => {
                 resolve(res)
             }, (err) => {
                 reject(err)
+                alert("Gagal menampilkan data")
+            }).catch((err) => {
+                alert("Gagal menampilkan data")
             })
     })
     return promise
 }
 
-const Post = (path) => {
-    const promise = new Promise((resolve, reject) => {
-        Axios({
-                url: `${rootPath}/${path}`,
-                method: 'POST',
-                headers: {
-                    'Authorization': token
-                }
-            })
-            .then((res) => {
-                resolve(res)
-            }, (err) => {
-                reject(err)
-            })
-    })
-    return promise
-}
+// const Post = (rootPath, path, data) => {
+//     const promise = new Promise((resolve, reject) => {
+//         Axios({
+//                 url: `${rootPath}/${path}`,
+//                 method: 'POST',
+//                 headers: {
+//                     'Authorization': token
+//                 },
+//                 data
+//             })
+//             .then((res) => {
+//                 resolve(res)
+//             }, (err) => {
+//                 reject(err)
+//             })
+//     })
+//     return promise
+// }
 
-const getEmployee = () => Get('api/nasabah/list')
-const getEmployeeById = (id) => Get('api/nasabah/' + id)
+//Post
+// const createUser = (data) => Post('users/register', false, data)
+
+//Get
+const getEmployeeAll = () => Get('employee/all?page=')
+const getEmployee = (page) => Get('employee/all?page=' + page)
+const getEmployeeById = (id) => Get('employee/' + id)
 const getReports = () => Get('reports/all')
 const paginationTransaksi = (page) => Get('reports/all?page=' + page)
 const paginationTransaksiByCO = (id_co, page) => Get('reports/by_co/' + id_co + '/' + page)
 const getTransactionByCO = (id_co) => Get('reports/by_co/' + id_co)
-const getNasabah = () => Get('customers/all')
+const getNasabah = (page) => Get('customers/all?page=' + page)
+const getNasabahByIdCO = (nik) => Get('customers/' + nik)
+const getTransactionLate = (page) => Get('reports/late?page=' + page)
 
-const createUser = () => Post('users/register')
 
 const API = {
     getEmployee,
@@ -58,7 +69,10 @@ const API = {
     paginationTransaksi,
     paginationTransaksiByCO,
     getTransactionByCO,
-    getNasabah
+    getNasabah,
+    getNasabahByIdCO,
+    getTransactionLate,
+    getEmployeeAll
 }
 
 export default API

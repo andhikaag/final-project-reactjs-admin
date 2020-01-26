@@ -9,24 +9,15 @@ import Axios from 'axios'
 import Cookie from 'react-cookies'
 
 export default class AddEmployeeLogin extends Component {
-  constructor() {
-    super()
-
-    this.onChangeUsername = this.onChangeUsername.bind(this)
-    this.onChangePassword = this.onChangePassword.bind(this)
-    this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this)
-    this.onChangeNama = this.onChangeNama.bind(this)
-    this.onChangeNIK = this.onChangeNIK.bind(this)
-
-    this.state = {
-      username: '',
-      password: '',
-      confirmPassword: '',
-      nama: '',
-      nik: '',
-      role: '2',
-      statusForm: false
-    }
+  state = {
+    username: '',
+    password: '',
+    confirmPassword: '',
+    nama: '',
+    nik: '',
+    role: '2',
+    statusPassword: false,
+    statusNIK: false
   }
 
   onChangePassword = (e) => {
@@ -35,9 +26,9 @@ export default class AddEmployeeLogin extends Component {
   onChangeConfirmPassword = (e) => {
     this.setState({ confirmPassword: e.target.value })
     if (e.target.value === this.state.password) {
-      this.setState({ statusForm: true })
+      this.setState({ statusPassword: true })
     } else {
-      this.setState({ statusForm: false })
+      this.setState({ statusPassword: false })
     }
   }
 
@@ -51,48 +42,48 @@ export default class AddEmployeeLogin extends Component {
 
   onChangeNIK = (e) => {
     this.setState({ nik: e.target.value })
+    if (e.target.value.length === 8) {
+      this.setState({ statusNIK: true })
+    } else {
+      this.setState({ statusNIK: false })
+    }
   }
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state)
-    const token = Cookie.load('token')
-    Axios({
-      // 54.254.180.214:9803/api/login
-      url: 'http://192.168.30.94:3000/users/register',
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': token
-      },
-      data: {
-        "username": this.state.username,
-        "password": this.state.confirmPassword,
-        "role_id": this.state.role,
-        "name": this.state.nama,
-        "nik": this.state.nik
-      }
-    })
-      .then((res) => {
-        console.info(res)
-        if (res.status === 200) {
-          alert("sukses")
-          window.location.href = "/add-employee-login-account"
-          // localStorage.setItem("access_token", token)
-          // alert("sukses")
-          // let tokenJson = JSON.parse(atob(token.split(".")[1]))
-          // console.log(tokenJson)
-          // if (res.data.data.role === null) {
-          // } else {
-          //   alert("access denied")
-          // }
-        } else {
-          alert("Username/Password Salah")
+    if (this.state.statusNIK && this.state.statusPassword) {
+      console.log(this.state)
+      const token = Cookie.load('token')
+      Axios({
+        // 54.254.180.214:9803/api/login
+        url: 'http://192.168.1.15:3000/users/register',
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': token
+        },
+        data: {
+          "username": this.state.username,
+          "password": this.state.confirmPassword,
+          "role_id": this.state.role,
+          "name": this.state.nama,
+          "nik": this.state.nik
         }
-      }).catch((error) => {
-        console.log(error)
-        alert("Error", error)
       })
+        .then((res) => {
+          console.info(res)
+          if (res.status === 200) {
+            alert(res.data.message.status)
+          } else {
+            alert(res.data.message.status)
+          }
+        }).catch((err) => {
+          console.log(err)
+          alert(err.message)
+        })
+    } else {
+      alert("data belum benar")
+    }
   }
 
   render() {
@@ -101,24 +92,24 @@ export default class AddEmployeeLogin extends Component {
         <HeaderText headText="Form Tambah Akun Community Officer" />
         <Form onSubmit={this.onSubmit}>
           <Form.Row>
-            <Form.Group as={Col} controlId="formGridNama">
+            <Form.Group as={Col}>
               <Form.Label>Username</Form.Label>
               <Form.Control type="text" value={this.state.username} onChange={this.onChangeUsername} placeholder="Masukkan Username" required />
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col}>
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} controlId="formGridNama">
+            <Form.Group as={Col}>
               <Form.Label>Password</Form.Label>
               <Form.Control value={this.state.password} onChange={this.onChangePassword} type="password" placeholder="Masukkan Password" required />
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col}>
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control value={this.state.confirmPassword} onChange={this.onChangeConfirmPassword} type="password" placeholder="Konfirmasi Password" required />
               {
-                this.state.statusForm ?
+                this.state.statusPassword ?
 
                   <small className="form-text text-success">
                     OK!
@@ -130,14 +121,24 @@ export default class AddEmployeeLogin extends Component {
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} controlId="formGridNama">
+            <Form.Group as={Col}>
               <Form.Label>Nama</Form.Label>
               <Form.Control type="text" value={this.state.nama} onChange={this.onChangeNama} placeholder="Masukkan Nama" required />
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col}>
               <Form.Label>NIK</Form.Label>
-              <Form.Control type="text" value={this.state.nik} onChange={this.onChangeNIK} placeholder="Masukkan NIK" required />
+              <Form.Control type="text" maxLength="8" value={this.state.nik} onChange={this.onChangeNIK} placeholder="Masukkan NIK" required />
+              {
+                this.state.statusNIK ?
+
+                  <small className="form-text text-success">
+                    OK!
+                  </small> :
+                  <small className="form-text text-danger">
+                    *isi harus 8 angka
+                  </small>
+              }
             </Form.Group>
           </Form.Row>
           <center>

@@ -11,23 +11,29 @@ import { Pagination } from 'react-bootstrap'
 import API from '../../../api'
 import ButtonApp from '../../elements/ButtonApp'
 
+function searchFor(searchItem) {
+  return function (x) {
+    return x.postedBy.toLowerCase().includes(searchItem.toLowerCase()) || !searchItem
+  }
+}
 
-class Report extends Component {
+class SearchCoName extends Component {
   state = {
     data: [],
     totalPage: 0,
     page: 1,
     searchItem: '',
-    currentPage: 0
+    currentPage: ''
   }
 
   componentDidMount() {
     const url = window.location
     const urlObject = new URL(url)
     const currentPage = urlObject.searchParams.get("page")
+    const searchFor = urlObject.searchParams.get("co")
     let pageInt = parseInt(currentPage)
     this.setState({ currentPage: pageInt })
-    API.paginationTransaksi(currentPage).then(res => {
+    API.getTransactionByCO(searchFor).then(res => {
       console.log(res)
       this.setState({
         data: res.data.message.rows,
@@ -41,14 +47,14 @@ class Report extends Component {
   }
 
   handlePage = (e) => {
-    // const url = window.location
-    // const urlObject = new URL(url)
-    // const idCO = urlObject.searchParams.get("id")
-    window.location.href = "/report?page=" + e.target.text
+    const url = window.location
+    const urlObject = new URL(url)
+    const search = urlObject.searchParams.get("co")
+    window.location.href = "/report-search?co=" + search + "&page=" + e.target.text
   }
 
   handleSearch = () => {
-    this.props.history.push('/report-search?co=' + this.state.searchItem)
+    window.location.href = '/report-search?co=' + this.state.searchItem
   }
 
   handleLatePayments = () => {
@@ -63,13 +69,13 @@ class Report extends Component {
       items.push(
         <Pagination.Item key={number} active={number === active}>
           {number}
-        </Pagination.Item>
-      )
+        </Pagination.Item>,
+      );
     }
     return (
       <>
         <div className="content">
-          <HeaderText headText="List Data Financing" />
+          <HeaderText headText="List Data Transaksi" />
           <Row>
             <Col>
               <ButtonApp variant="danger" text="Late Payments" onClick={this.handleLatePayments} />
@@ -92,7 +98,7 @@ class Report extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.data.map((val, idx) => {
+              {this.state.data.filter(searchFor(this.state.searchItem)).map((val, idx) => {
                 return (
                   <tr key={idx} iddata={val, idx}>
                     <td>{val.trxId}</td>
@@ -108,13 +114,11 @@ class Report extends Component {
               })}
             </tbody>
           </Table>
-          <Pagination onClick={this.handlePage}>
-            {items}
-          </Pagination>
+          <Pagination onClick={this.handlePage}> {items}</Pagination>
         </div>
       </>
     )
   }
 }
 
-export default withRouter(Report)
+export default withRouter(SearchCoName)

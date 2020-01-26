@@ -1,53 +1,68 @@
 import React, { Component } from 'react'
 import {
   Table,
-  Badge,
   Row,
   Col,
-  Form
+  Pagination
 } from 'react-bootstrap'
 import Search from '../../elements/Search'
-import Axios from 'axios'
 import HeaderText from '../../elements/HeaderText'
 import API from '../../../api'
 
 
 export default class index extends Component {
   state = {
-    data: []
+    data: [],
+    totalPage: 0,
+    page: 1,
+    currentPage: 0
   }
 
   componentDidMount() {
-    API.getNasabah().then(res => {
+    const url = window.location
+    const urlObject = new URL(url)
+    const currentPage = urlObject.searchParams.get("page")
+    let pageInt = parseInt(currentPage)
+    let pageFix = pageInt - 1
+    this.setState({ currentPage: pageInt })
+    API.getNasabah(pageFix).then(res => {
       this.setState({
-        data: res.data.data
+        data: res.data.data.content,
+        totalPage: res.data.data.totalPages
       })
-      console.log(res)
+      console.log("total page", this.state.totalPage)
     })
   }
 
+  handlePage = (e) => {
+    window.location.href = "/nasabah?page=" + e.target.text
+  }
+
   render() {
+    console.log("Page", this.state.currentPage)
+    let active = this.state.currentPage
+    let items = [];
+    let page = this.state.totalPage
+    for (let number = 1; number <= page; number++) {
+      items.push(
+        <Pagination.Item key={number} active={number === active}>
+          {number}
+        </Pagination.Item>,
+      );
+    }
     return (
       <div>
         <div className="content">
           <HeaderText headText="List Data Nasabah" />
           <Row>
+            <Col></Col>
             <Col>
-              <Form.Group as={Col} controlId="formGridState">
-                <Form.Control as="select">
-                  <option>Choose...</option>
-                  <option>...</option>
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Search />
+              {/* <Search /> */}
             </Col>
           </Row>
           <Table responsive striped bordered hover size="sm">
             <thead>
               <tr>
-                <th>NIK</th>
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Nomor Telp</th>
@@ -58,16 +73,16 @@ export default class index extends Component {
               {this.state.data.map((val, idx) => {
                 return (
                   <tr key={idx} iddata={val, idx}>
-                    <td>{val.customer_nik}</td>
                     <td>{val.name}</td>
                     <td>{val.email}</td>
-                    <td>{val.phone}</td>
+                    <td>+62 {val.phone}</td>
                     <td>{val.address}</td>
                   </tr>
                 )
               })}
             </tbody>
           </Table>
+          <Pagination onClick={this.handlePage}> {items}</Pagination>
         </div>
       </div>
     )

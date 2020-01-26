@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Col,
-  Card,
-  Row
+  Card
 } from 'react-bootstrap'
 
 export default class CardCount extends Component {
