@@ -71,6 +71,10 @@ body {
 
 /* Content */
 
+.buttonAction {
+    margin: 10px
+}
+
 .contentHeadText {
     margin-bottom: 40px;
 }

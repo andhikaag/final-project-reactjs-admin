@@ -96,10 +96,18 @@ class Employee extends Component {
                         text="Info"
                       />
                       <ButtonApp
+                        className="buttonAction"
                         size="sm"
                         onClick={() => this.props.history.push("/edit-employee?id=" + val.nik)}
                         variant="success"
                         text="Edit"
+                      />
+                      <ButtonApp
+                        // className="buttonAction"
+                        size="sm"
+                        onClick={() => this.props.history.push("/add-employee-login-account?id=" + val.nik)}
+                        variant="warning"
+                        text="Add Account"
                       />
                     </td>
                   </tr>

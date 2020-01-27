@@ -36,19 +36,19 @@ export default class InfoEmployee extends Component {
         nik: res.data.data.nik,
         name: res.data.data.name,
         email: res.data.data.email,
-        address: res.data.data.address
+        address: res.data.data.address,
       })
     })
 
     API.getNasabahByIdCO(idCO).then(res => {
       console.log("nasabah : ", res)
       this.setState({
-        nasabah: res.data.data,
+        nasabah: res.data.data
         // totalPage: 
       })
       console.log(res)
     }).catch((err) => {
-      alert(err.message)
+      console.log(err)
     })
   }
 
@@ -121,16 +121,23 @@ export default class InfoEmployee extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.nasabah.map((val, idx) => {
-                  return (
-                    <tr key={idx} iddata={val, idx}>
-                      <td>{val.name}</td>
-                      <td>{val.email}</td>
-                      <td>{val.phone}</td>
-                      <td>{val.address}</td>
-                    </tr>
-                  )
-                })}
+                {this.state.nasabah === null ?
+                  <tr>
+                    <td colSpan="4">
+                      <center>Tidak Ada Nasabah</center>
+                    </td>
+                  </tr> :
+                  this.state.nasabah.map((val, idx) => {
+                    return (
+                      <tr key={idx} iddata={val, idx}>
+                        <td>{val.name}</td>
+                        <td>{val.email}</td>
+                        <td>{val.phone}</td>
+                        <td>{val.address}</td>
+                      </tr>
+                    )
+                  })
+                }
               </tbody>
             </Table>
             {/* <Pagination onClick={this.handlePage}>{items}</Pagination> */}

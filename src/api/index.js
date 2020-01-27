@@ -4,7 +4,7 @@ import Cookie from 'react-cookies'
 // api update 
 // const rootPath = 'http://54.254.180.214:9803'
 // const rootPath = 'http://192.168.30.38:8080/employee'
-const rootPath = 'http://192.168.1.15:3000'
+const rootPath = 'http://192.168.43.216:3000'
 const token = Cookie.load('token')
 const Get = (path) => {
     const promise = new Promise((resolve, reject) => {
@@ -19,8 +19,6 @@ const Get = (path) => {
                 resolve(res)
             }, (err) => {
                 reject(err)
-                alert("Gagal menampilkan data")
-            }).catch((err) => {
                 alert("Gagal menampilkan data")
             })
     })

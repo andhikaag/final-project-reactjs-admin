@@ -7,6 +7,7 @@ import {
 import HeaderText from '../../elements/HeaderText'
 import Axios from 'axios'
 import Cookie from 'react-cookies'
+import API from '../../../api'
 
 export default class AddEmployeeLogin extends Component {
   state = {
@@ -17,7 +18,22 @@ export default class AddEmployeeLogin extends Component {
     nik: '',
     role: '2',
     statusPassword: false,
-    statusNIK: false
+  }
+
+  componentDidMount = () => {
+    const url = window.location
+    const urlObject = new URL(url)
+    const idCO = urlObject.searchParams.get("id")
+    // const page = urlObject.searchParams.get("page")
+    console.log("idCO : ", idCO)
+    API.getEmployeeById(idCO).then(res => {
+      console.log(res)
+      this.setState({
+
+        nik: res.data.data.nik,
+        nama: res.data.data.name,
+      })
+    })
   }
 
   onChangePassword = (e) => {
@@ -51,12 +67,12 @@ export default class AddEmployeeLogin extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    if (this.state.statusNIK && this.state.statusPassword) {
+    if (this.state.statusPassword) {
       console.log(this.state)
       const token = Cookie.load('token')
       Axios({
         // 54.254.180.214:9803/api/login
-        url: 'http://192.168.1.15:3000/users/register',
+        url: 'http://192.168.43.216:3000/users/register',
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +95,7 @@ export default class AddEmployeeLogin extends Component {
           }
         }).catch((err) => {
           console.log(err)
-          alert(err.message)
+          alert("Data sudah ada/gagal")
         })
     } else {
       alert("data belum benar")
@@ -123,22 +139,12 @@ export default class AddEmployeeLogin extends Component {
           <Form.Row>
             <Form.Group as={Col}>
               <Form.Label>Nama</Form.Label>
-              <Form.Control type="text" value={this.state.nama} onChange={this.onChangeNama} placeholder="Masukkan Nama" required />
+              <Form.Control type="text" value={this.state.nama} placeholder="Masukkan Nama" disabled />
             </Form.Group>
 
             <Form.Group as={Col}>
               <Form.Label>NIK</Form.Label>
-              <Form.Control type="text" maxLength="8" value={this.state.nik} onChange={this.onChangeNIK} placeholder="Masukkan NIK" required />
-              {
-                this.state.statusNIK ?
-
-                  <small className="form-text text-success">
-                    OK!
-                  </small> :
-                  <small className="form-text text-danger">
-                    *isi harus 8 angka
-                  </small>
-              }
+              <Form.Control type="text" value={this.state.nik} onChange={this.onChangeNIK} placeholder="Masukkan NIK" disabled />
             </Form.Group>
           </Form.Row>
           <center>

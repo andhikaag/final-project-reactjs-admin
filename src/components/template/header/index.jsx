@@ -61,7 +61,7 @@ class Header extends Component {
                 <NavMenu to="/nasabah" icon="fa fa-handshake-o" text="Nasabah" />
                 <NavMenu to="report" icon="fa fa-book" text="Financing" />
                 <NavMenu to="add-employee" icon="fas fa-plus" text="Add Data CO" />
-                <NavMenu to="add-employee-login-account" icon="fa fa-user-plus" text="Add Akun CO" />
+                {/* <NavMenu to="add-employee-login-account" icon="fa fa-user-plus" text="Add Akun CO" /> */}
               </div>
             </div>
             <Container>

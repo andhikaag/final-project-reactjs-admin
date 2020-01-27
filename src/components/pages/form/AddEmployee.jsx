@@ -46,7 +46,7 @@ export default class addEmployee extends Component {
       const token = Cookie.load('token')
       Axios({
         // 54.254.180.214:9803/api/login
-        url: 'http://192.168.1.15:3000/employee/register',
+        url: 'http://192.168.43.216:3000/employee/register',
         method: 'POST',
         headers: {
           "Content-Type": "application/json",

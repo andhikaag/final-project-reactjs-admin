@@ -56,7 +56,7 @@ class EditEmployee extends Component {
         console.log(this.state)
         // const token = Cookie.load('token')
         Axios({
-            url: 'http://192.168.1.15:3000/employee/edit/' + idCO,
+            url: 'http://192.168.43.216:3000/employee/edit/' + idCO,
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
